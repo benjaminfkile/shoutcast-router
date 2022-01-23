@@ -1,17 +1,17 @@
 const express = require("express")
-const router = express.Router()
+const genreRouter = express.Router()
 const axios = require("axios").default;
 const key = process.env.KEY;
 const limit = process.env.LIMIT
 
-router
+genreRouter
     .route("/:genre")
     .get((req, res, next) => {
         const genre = req.params.genre
         axios.get(`http://api.shoutcast.com/station/advancedsearch?mt=audio/mpeg&search=${genre}&limit=${limit}&f=json&k=${key}`, {
-        }).then(suggestions => {
-            res.json(suggestions.data)
+        }).then(genres => {
+            res.send({data: genres.data.response.data.stationlist.station})
         }).catch(next)
 
     })
-module.exports = router
+module.exports = genreRouter

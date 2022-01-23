@@ -4,7 +4,8 @@ const morgan = require("morgan")
 const cors = require("cors")
 const helmet = require("helmet")
 const { NODE_ENV } = require("./config")
-const router = require("./router/router")
+const genreRouter = require("./routers/genre-router")
+const stationRouter = require("./routers/station-router")
 
 const app = express()
 
@@ -15,7 +16,8 @@ const morganOption = (NODE_ENV === "production")
 app.use(morgan(morganOption))
 app.use(cors())
 app.use(helmet())
-app.use("/api/router", router)
+app.use("/api/genre", genreRouter)
+app.use("/api/station", stationRouter)
 
   app.use(function errorHandler(error, req, res, next) {
       let response
